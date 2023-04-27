@@ -7,13 +7,13 @@ name: Docker
 
 on:
   schedule:
-    - cron: '45 9 * * *'
+    - cron: "45 9 * * *"
   push:
-    branches: [ "master" ]
+    branches: ["master"]
     # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: ["v*.*.*"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 env:
   # Use docker.io for Docker Hub if empty or ghrc.io for github repository
@@ -57,7 +57,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
@@ -68,7 +67,7 @@ jobs:
             devoxit/clica-gov
           tags: |
             type=sha,enabled=true,prefix=ref-
-            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
             type=raw,value=v${{steps.get-version-from-package-json.outputs.version}},enable=true
 
       # Build and push Docker image with Buildx (don't push on PR)
